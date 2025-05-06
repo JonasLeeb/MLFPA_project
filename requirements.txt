@@ -14,5 +14,4 @@ torch
 tqdm
 sentence-transformers
 ipykernel
-os
 logging
