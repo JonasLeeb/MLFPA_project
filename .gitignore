@@ -9,3 +9,12 @@ Word2Vec embeddings/word2vec_embedding.npz
 TF-IDF embeddings/feature_names.txt
 Word2Vec embeddings/word2vec_embedding.npz
 .gitignore
+BERT embeddings/bert_embedding_test.npz
+BERT embeddings/bert_embedding.npz
+results/results_BERT_NN.pkl
+results/results_BERT.pkl
+results/results_TFIDF_NN.pkl
+results/results_TFIDF.pkl
+results/results_W2V_NN.pkl
+results/results_W2V.pkl
+TF-IDF embeddings/tfidf_matrix_train.npz
