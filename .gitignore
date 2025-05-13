@@ -3,3 +3,9 @@
 models/
 TF-IDF embeddings/tfidf_matrix.npz
 word_vectors_plot.html
+TF-IDF embeddings/tfidf_matrix_test.npz
+Word2Vec embeddings/word2vec_embedding_test.npz
+Word2Vec embeddings/word2vec_embedding.npz
+TF-IDF embeddings/feature_names.txt
+Word2Vec embeddings/word2vec_embedding.npz
+.gitignore
