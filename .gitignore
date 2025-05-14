@@ -21,3 +21,6 @@ TF-IDF embeddings/tfidf_matrix_train.npz
 Word2Vec embeddings/word2vec_embedding_test_bad.npz
 Word2Vec embeddings/word2vec_embedding_test_bad_2.npz
 Word2Vec embeddings/word2vec_embedding_bad.npz
+BERT embeddings/bert_embedding_abs_test.npz
+.gitignore
+BERT embeddings/bert_embedding_abs.npz

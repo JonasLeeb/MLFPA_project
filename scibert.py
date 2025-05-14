@@ -31,7 +31,7 @@ batch_size = 16
 
 # Initialize tokenizer and model
 tokenizer = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
-model = AutoModel.from_pretrained('allenai/scibert_scivocab_uncased')
+model = AutoModel.from_pretrained('allenai/scibert_scivocab_uncased').to(device)
 
 # Prepare the dataset
 documents = ds["train"][:]['text']
@@ -44,7 +44,7 @@ for i in tqdm(range(0, len(documents), batch_size), desc="Processing Batches"):
     batch = documents[i:i + batch_size]
     
     # Tokenize the input text
-    inputs = tokenizer(batch, return_tensors='pt', padding=True, truncation=True).to(device)
+    inputs = tokenizer(batch, return_tensors='pt', padding=True, truncation=True, max_length = 512).to(device)
     
     # Get the embeddings
     with torch.no_grad():
@@ -74,7 +74,7 @@ for i in tqdm(range(0, len(documents), batch_size), desc="Processing Batches"):
     batch = documents[i:i + batch_size]
     
     # Tokenize the input text
-    inputs = tokenizer(batch, return_tensors='pt', padding=True, truncation=True).to(device)
+    inputs = tokenizer(batch, return_tensors='pt', padding=True, truncation=True, max_length = 512).to(device)
     
     # Get the embeddings
     with torch.no_grad():
