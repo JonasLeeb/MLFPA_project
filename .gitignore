@@ -30,3 +30,5 @@ BERT embeddings/bert_embedding_abs_test.npz
 .gitignore
 BERT embeddings/bert_embedding_abs.npz
 slurm_outputs/
+SciBERT_embeddings/scibert_embedding_test.npz
+SciBERT_embeddings/scibert_embedding.npz
