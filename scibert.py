@@ -1,4 +1,4 @@
-from transformers import *
+from transformers import AutoTokenizer, AutoModel
 import torch
 from tqdm import tqdm
 import numpy as np
@@ -27,7 +27,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
 
 # Define batch size
-batch_size = 16
+batch_size = 64
 
 # Initialize tokenizer and model
 tokenizer = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
@@ -56,7 +56,7 @@ for i in tqdm(range(0, len(documents), batch_size), desc="Processing Batches"):
 cls_embedding = torch.cat(cls_embeddings, dim=0)
 
 # save bert embeddings
-np.savez_compressed("sciBERT embeddings/bert_embedding.npz", 
+np.savez_compressed("scibert_embedding.npz", 
                    bert_embedding=cls_embedding.numpy())
 
 
@@ -86,5 +86,5 @@ for i in tqdm(range(0, len(documents), batch_size), desc="Processing Batches"):
 cls_embedding_test = torch.cat(cls_embedding_test, dim=0)
 
 # save bert embeddings
-np.savez_compressed("sciBERT embeddings/bert_embedding_test.npz", 
+np.savez_compressed("scibert_embedding_test.npz", 
                    bert_embedding=cls_embedding_test.numpy())
