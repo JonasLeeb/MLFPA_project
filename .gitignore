@@ -18,9 +18,15 @@ results/results_TFIDF.pkl
 results/results_W2V_NN.pkl
 results/results_W2V.pkl
 TF-IDF embeddings/tfidf_matrix_train.npz
+bin/
+lib/
+pyvenv.cfg
+lib64
+share/
 Word2Vec embeddings/word2vec_embedding_test_bad.npz
 Word2Vec embeddings/word2vec_embedding_test_bad_2.npz
 Word2Vec embeddings/word2vec_embedding_bad.npz
 BERT embeddings/bert_embedding_abs_test.npz
 .gitignore
 BERT embeddings/bert_embedding_abs.npz
+slurm_outputs/

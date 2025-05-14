@@ -1,0 +1,17 @@
+# python -m venv MLforPhysics
+# source MLforPhysics/bin/activate (Linux/macOS) or MLforPhysics\Scripts\activate (Windows)
+# pip install -r requirements.txt
+numpy
+pandas
+scikit-learn
+matplotlib
+seaborn
+nltk
+gensim
+datasets
+transformers
+torch
+tqdm
+sentence-transformers
+ipykernel
+logging
