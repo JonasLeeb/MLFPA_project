@@ -2,7 +2,6 @@ from transformers import *
 import torch
 from tqdm import tqdm
 import numpy as np
-from tqdm import tqdm
 from datasets import load_dataset
 
 # Load the dataset
