@@ -27,7 +27,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
 
 # Define batch size
-batch_size = 64
+batch_size = 1
 
 # Initializing a ModernBert style configuration
 configuration = ModernBertConfig()
