@@ -32,3 +32,5 @@ BERT embeddings/bert_embedding_abs.npz
 slurm_outputs/
 SciBERT_embeddings/scibert_embedding_test.npz
 SciBERT_embeddings/scibert_embedding.npz
+__pycache__/helper_functions.cpython-311.pyc
+test.ipynb
