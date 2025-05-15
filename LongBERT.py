@@ -29,7 +29,7 @@ print(f"Using device: {device}")
 
 # Define batch size
 batch_size = 16
-num_chunks = 10
+num_chunks = 32
 
 # Initializing a model from the modernbert-base style configuration
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
