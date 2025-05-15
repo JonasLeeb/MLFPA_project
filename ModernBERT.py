@@ -49,7 +49,7 @@ for i in tqdm(range(0, len(documents), batch_size), desc="Processing Batches"):
     batch = documents[i:i + batch_size]
     
     # Tokenize the input text
-    inputs = tokenizer(batch, return_tensors='pt', padding=True, truncation=True, max_length = 8190).to(device)
+    inputs = tokenizer(batch, return_tensors='pt', padding=True, truncation=True, max_length = 8192).to(device)
     
     # Get the embeddings
     with torch.no_grad():
