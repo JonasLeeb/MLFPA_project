@@ -8,7 +8,9 @@ def embed_chunk(batch, tokenizer, model, device, max_length=512, max_chunks=None
     tokens = tokenizer(
         batch,
         return_tensors="pt",
-        padding=True,
+        padding="max_length",
+        max_length=max_length*max_chunks,
+        truncation=True
     )
     
     # Extract input IDs and attention mask
