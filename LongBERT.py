@@ -50,10 +50,10 @@ for i in tqdm(range(0, len(documents), batch_size), desc="Processing Batches"):
         cls_embeddings[j].append(chunk)
 
 # Concatenate along the batch dimension for each chunk
-cls_embeddings = [torch.cat(chunks, axis=0) for chunks in cls_embeddings if chunks]
+cls_embeddings = np.array([torch.cat(chunks, axis=0) for chunks in cls_embeddings if chunks])
 # save bert embeddings
 np.savez_compressed("longbert_embedding.npz", 
-                   bert_embedding=cls_embeddings.numpy())
+                   bert_embedding=cls_embeddings)
 
 
 
@@ -73,8 +73,8 @@ for i in tqdm(range(0, len(documents), batch_size), desc="Processing Batches"):
         cls_embeddings_test[j].append(chunk)
 
 # Concatenate along the batch dimension for each chunk
-cls_embeddings_test = [torch.cat(chunks, axis=0) for chunks in cls_embeddings if chunks]
+cls_embeddings_test = np.array([torch.cat(chunks, axis=0) for chunks in cls_embeddings if chunks])
 
 # save bert embeddings
 np.savez_compressed("longbert_embedding_test.npz", 
-                   bert_embedding=cls_embeddings_test.numpy())
+                   bert_embedding=cls_embeddings_test)
