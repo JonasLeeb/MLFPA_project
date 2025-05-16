@@ -55,7 +55,7 @@ model = BertModel.from_pretrained('bert-base-uncased').to(device)
 # np.savez_compressed("longbert_embedding.npz", 
 #                    bert_embedding=cls_embeddings)
 
-
+cls_embeddings_test = []
 
 # Prepare the dataset
 documents = ds["test"][:]['text']
@@ -73,7 +73,7 @@ for i in tqdm(range(0, len(documents), batch_size), desc="Processing Batches"):
         cls_embeddings_test[j].append(chunk)
 
 # Concatenate along the batch dimension for each chunk
-cls_embeddings_test = np.array([torch.cat(chunks, axis=0) for chunks in cls_embeddings if chunks])
+cls_embeddings_test = np.array([torch.cat(chunks, axis=0) for chunks in cls_embeddings_test if chunks])
 
 # save bert embeddings
 np.savez_compressed("longbert_embedding_test.npz", 
