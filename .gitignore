@@ -36,3 +36,5 @@ __pycache__/helper_functions.cpython-311.pyc
 test.ipynb
 ModernBERT_embeddings/modernbert_embedding_test.npz
 ModernBERT_embeddings/modernbert_embedding.npz
+LongBERT_embeddings/longbert_embedding_test.npz
+LongBERT_embeddings/longbert_embedding.npz
