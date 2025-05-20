@@ -15,8 +15,8 @@ class ArxivSearch:
 
         self.load_data(dataset)
         if embedding == "tfidf":
-            self.tfidf_matrix = load_npz("TF-IDF embeddings/tfidf_matrix_train.npz")
-            with open("TF-IDF embeddings/feature_names.txt", "r") as f:
+            self.tfidf_matrix = load_npz("TF-IDF embeddings/tfidf_matrix_small.npz")
+            with open("TF-IDF embeddings/feature_names_small.txt", "r") as f:
                 self.feature_names = [line.strip() for line in f.readlines()]
 
     def load_data(self, dataset):
