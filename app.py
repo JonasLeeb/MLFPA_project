@@ -78,7 +78,7 @@ class ArxivSearch:
 
 
 # Load dataset and initialize search engine
-dataset = load_dataset("your_dataset_name")  # replace with your dataset
+dataset = load_dataset("ccdv/arxiv-classification", "no_ref")  # replace with your dataset
 search_engine = ArxivSearch(dataset)
 
 @app.route("/", methods=["GET", "POST"])
