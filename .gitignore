@@ -39,3 +39,6 @@ ModernBERT_embeddings/modernbert_embedding.npz
 LongBERT_embeddings/longbert_embedding_test.npz
 LongBERT_embeddings/longbert_embedding.npz
 __pycache__/TF_IDF_search_engine.cpython-311.pyc
+Sci2Vec_embeddings/sci2vec_embedding_test_2.npz
+Sci2Vec_embeddings/sci2vec_embedding_test.npz
+Sci2Vec_embeddings/sci2vec_embedding.npz

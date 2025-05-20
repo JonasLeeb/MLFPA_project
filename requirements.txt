@@ -1,7 +1,8 @@
 # python -m venv MLforPhysics
 # source MLforPhysics/bin/activate (Linux/macOS) or MLforPhysics\Scripts\activate (Windows)
 # pip install -r requirements.txt
+flask
 numpy
 scipy
-ipywidgets
-ipython
+datasets
+

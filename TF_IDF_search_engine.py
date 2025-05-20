@@ -1,5 +1,4 @@
 import re
-from sklearn.feature_extraction.text import TfidfVectorizer
 from ipywidgets import widgets, HBox, Output
 import IPython.display as display
 from scipy.sparse import load_npz
@@ -8,7 +7,7 @@ import numpy as np
 
 
 class ArxivSearch:
-    def __init__(self, dataset, encoding):
+    def __init__(self, dataset, embedding):
         """
         Initializes the search engine with the provided dataset and encoding.
 
@@ -41,7 +40,7 @@ class ArxivSearch:
         self.load_data(dataset)
         # self.vectorizer = TfidfVectorizer(stop_words='english', max_features=10000)
         # self.tfidf_matrix = self.vectorizer.fit_transform(self.documents)
-        if encoding == "tfidf":
+        if embedding == "tfidf":
             self.tfidf_matrix = load_npz("TF-IDF embeddings/tfidf_matrix_train.npz")
             with open("TF-IDF embeddings/feature_names.txt", "r") as f:
                 self.feature_names = [line.strip() for line in f.readlines()]
@@ -151,3 +150,5 @@ class ArxivSearch:
 
     def show_widgets(self):
         display.display(HBox([self.search_box, self.search_button]), self.output_area)
+
+

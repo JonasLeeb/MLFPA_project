@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>arXiv Search</title>
+    <style>
+        body { font-family: Arial; margin: 40px; }
+        input[type="text"] { width: 60%; padding: 10px; }
+        input[type="submit"] { padding: 10px 20px; }
+        .result { margin-top: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>arXiv Search</h1>
+    <form method="POST">
+        <input type="text" name="query" value="{{ query }}" placeholder="Enter your search query">
+        <input type="submit" value="Search">
+    </form>
+
+    {% if results %}
+        <h2>Results</h2>
+        {% for result in results %}
+            <div class="result">
+                <p><a href="{{ result.link }}" target="_blank">{{ result.link }}</a></p>
+                <pre>{{ result.snippet }}</pre>
+            </div>
+        {% endfor %}
+    {% elif query %}
+        <p>No results found.</p>
+    {% endif %}
+</body>
+</html>
