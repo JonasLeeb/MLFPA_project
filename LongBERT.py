@@ -35,25 +35,25 @@ num_chunks = 32
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 model = BertModel.from_pretrained('bert-base-uncased').to(device)
 
-# # Prepare the dataset
-# documents = ds["train"][:]['text']
+# Prepare the dataset
+documents = ds["train"][:]['text']
 
-# # Initialize a list of lists to collect embeddings for each chunk
-# cls_embeddings = [[] for _ in range(num_chunks)]
+# Initialize a list of lists to collect embeddings for each chunk
+cls_embeddings = [[] for _ in range(num_chunks)]
 
-# # Process documents in batches
-# for i in tqdm(range(0, len(documents), batch_size), desc="Processing Batches"):
+# Process documents in batches
+for i in tqdm(range(0, len(documents), batch_size), desc="Processing Batches"):
 
-#     batch = documents[i:i + batch_size]
-#     embedded_chunk = embed_chunk(batch, max_length=512, max_chunks=num_chunks, tokenizer=tokenizer, model=model, device=device)
-#     for j, chunk in enumerate(embedded_chunk):
-#         cls_embeddings[j].append(chunk)
+    batch = documents[i:i + batch_size]
+    embedded_chunk = embed_chunk(batch, max_length=512, max_chunks=num_chunks, tokenizer=tokenizer, model=model, device=device)
+    for j, chunk in enumerate(embedded_chunk):
+        cls_embeddings[j].append(chunk)
 
-# # Concatenate along the batch dimension for each chunk
-# cls_embeddings = np.array([torch.cat(chunks, axis=0) for chunks in cls_embeddings if chunks])
-# # save bert embeddings
-# np.savez_compressed("longbert_embedding.npz", 
-#                    bert_embedding=cls_embeddings)
+# Concatenate along the batch dimension for each chunk
+cls_embeddings = np.array([torch.cat(chunks, axis=0) for chunks in cls_embeddings if chunks])
+# save bert embeddings
+np.savez_compressed("longbert_embedding.npz", 
+                   bert_embedding=cls_embeddings)
 
 cls_embeddings_test = []
 

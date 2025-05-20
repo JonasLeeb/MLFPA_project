@@ -33,79 +33,65 @@ if __name__ == "__main__":
     # Load the dataset
     ds = load_dataset("ccdv/arxiv-classification", "no_ref")
 
-    # Load TF-IDF matrix and feature names if not already loaded
-    try:
-        tfidf_matrix_train
-    except NameError:
-        print("TF-IDF matrix is not loaded. Loading now...")
-        tfidf_matrix_train = load_npz("TF-IDF embeddings/tfidf_matrix_train.npz")
-        with open("TF-IDF embeddings/feature_names.txt", "r") as f:
-            feature_names = [line.strip() for line in f.readlines()]
+    # # Load TF-IDF matrix and feature names if not already loaded
+    # try:
+    #     tfidf_matrix_train
+    # except NameError:
+    #     print("TF-IDF matrix is not loaded. Loading now...")
+    #     tfidf_matrix_train = load_npz("TF-IDF embeddings/tfidf_matrix_train.npz")
+    #     with open("TF-IDF embeddings/feature_names.txt", "r") as f:
+    #         feature_names = [line.strip() for line in f.readlines()]
 
-    good_words = [word for word in feature_names if word in wv.key_to_index]
-    bad_words = [word for word in feature_names if word not in wv.key_to_index]
+    # good_words = [word for word in feature_names if word in wv.key_to_index]
+    # bad_words = [word for word in feature_names if word not in wv.key_to_index]
 
-    print(f"Number of good words: {len(good_words)}")
-    print(f"Number of bad words: {len(feature_names) - len(good_words)}")
-    print(f"Number of words in the model: {len(wv.key_to_index)}")
+    # print(f"Number of good words: {len(good_words)}")
+    # print(f"Number of bad words: {len(feature_names) - len(good_words)}")
+    # print(f"Number of words in the model: {len(wv.key_to_index)}")
 
-    print('bad words:', bad_words[:10])
+    # print('bad words:', bad_words[:10])
 
-    # Initialize Word2Vec embedding matrix
-    word2vec_embedding = np.zeros((tfidf_matrix_train.shape[0], 200))
+    # # Initialize Word2Vec embedding matrix
+    # word2vec_embedding = np.zeros((tfidf_matrix_train.shape[0], 200))
 
-    # Load dataset
-    print("Loading dataset...")
-    texts = ds["train"][:]['text']
-    print("Dataset loaded successfully!")
+    # # Load dataset
+    # print("Loading dataset...")
+    # texts = ds["train"][:]['text']
+    # print("Dataset loaded successfully!")
 
-    # Preprocess texts
-    print("Preprocessing texts...")
-    tokenized_texts = [text.split() for text in texts]
-    filtered_texts = [[word for word in text if word in wv.key_to_index] 
-                    for text in tokenized_texts]
-    print("Text preprocessing completed!")
+    # # Precompute TF-IDF dictionaries for each document
+    # print("Preprocessing TF-IDF weights...")
+    # from scipy.sparse import coo_matrix
 
-    # Precompute feature index map
-    feature_index = {word: idx for idx, word in enumerate(feature_names)}
+    # tfidf_dicts = []
+    # for i in tqdm(range(tfidf_matrix_train.shape[0]), desc="Creating TF-IDF dictionaries"):
+    #     row = tfidf_matrix_train[i].tocoo()
+    #     words_in_doc = [feature_names[idx] for idx in row.col]
+    #     tfidf_dicts.append(dict(zip(words_in_doc, row.data)))
 
-    # Precompute word vector cache
-    print("Caching word vectors...")
-    word_vector_cache = {word: wv[word] for word in wv.key_to_index}
+    # print("Calculating weighted embeddings...")
+    # for i, text in enumerate(tqdm(texts, desc="Processing documents")):
+    #     words = [word for word in text.split() if word in wv.key_to_index]
+    #     if not words:
+    #         continue  # Keep as zeros if no valid words
 
-    # Precompute TF-IDF dictionaries for each document
-    print("Preprocessing TF-IDF weights...")
-    from scipy.sparse import coo_matrix
+    #     # Get vectors and weights
+    #     vectors = np.stack([wv[word] for word in words])
+    #     weights = np.array([tfidf_dicts[i].get(word, 0.0) for word in words])
 
-    tfidf_dicts = []
-    for i in tqdm(range(tfidf_matrix_train.shape[0]), desc="Creating TF-IDF dictionaries"):
-        row = tfidf_matrix_train[i].tocoo()
-        words_in_doc = [feature_names[idx] for idx in row.col]
-        tfidf_dicts.append(dict(zip(words_in_doc, row.data)))
+    #     # Calculate weighted average with numerical stability
+    #     try:
+    #         weighted_avg = np.average(vectors, axis=0, weights=weights)
+    #     except ZeroDivisionError:
+    #         weighted_avg = np.mean(vectors, axis=0)
 
-    # Main processing loop
-    print("Calculating weighted embeddings...")
-    for i, words in enumerate(tqdm(filtered_texts, desc="Processing documents")):
-        if not words:
-            continue  # Keep as zeros if no valid words
-        
-        # Get vectors and weights
-        vectors = np.stack([word_vector_cache[word] for word in words])
-        weights = np.array([tfidf_dicts[i].get(word, 0.0) for word in words])
-        
-        # Calculate weighted average with numerical stability
-        try:
-            weighted_avg = np.average(vectors, axis=0, weights=weights)
-        except ZeroDivisionError:
-            weighted_avg = np.mean(vectors, axis=0)
-        
-        word2vec_embedding[i] = weighted_avg
+    #     word2vec_embedding[i] = weighted_avg
 
-    # Save results
-    print("Saving embeddings...")
-    np.savez_compressed("sci2vec_embedding.npz", 
-                    word2vec_embedding=word2vec_embedding)
-    print("Embeddings saved successfully!")
+    # # Save results
+    # print("Saving embeddings...")
+    # np.savez_compressed("sci2vec_embedding.npz", 
+    #                 word2vec_embedding=word2vec_embedding)
+    # print("Embeddings saved successfully!")
 
     # Load TF-IDF matrix and feature names if not already loaded
     try:
@@ -148,23 +134,22 @@ if __name__ == "__main__":
         words_in_doc = [feature_names[idx] for idx in row.col]
         tfidf_dicts.append(dict(zip(words_in_doc, row.data)))
 
-    # Main processing loop
     print("Calculating weighted embeddings...")
-    for i, words in enumerate(tqdm(filtered_texts, desc="Processing documents")):
+    for i, text in enumerate(tqdm(texts, desc="Processing documents")):
+        words = [word for word in text.split() if word in wv.key_to_index]
         if not words:
             continue  # Keep as zeros if no valid words
-        
+
         # Get vectors and weights
-        vectors = np.stack([word_vector_cache[word] for word in words])
+        vectors = np.stack([wv[word] for word in words])
         weights = np.array([tfidf_dicts[i].get(word, 0.0) for word in words])
-        
+
         # Calculate weighted average with numerical stability
-        adjusted_weights = weights
         try:
-            weighted_avg = np.average(vectors, axis=0, weights=adjusted_weights)
+            weighted_avg = np.average(vectors, axis=0, weights=weights)
         except ZeroDivisionError:
             weighted_avg = np.mean(vectors, axis=0)
-        
+
         word2vec_embedding_test[i] = weighted_avg
 
     # Save results
