@@ -42,3 +42,6 @@ __pycache__/TF_IDF_search_engine.cpython-311.pyc
 Sci2Vec_embeddings/sci2vec_embedding_test_2.npz
 Sci2Vec_embeddings/sci2vec_embedding_test.npz
 Sci2Vec_embeddings/sci2vec_embedding.npz
+wandb/
+LongSciBERT_embeddings/longscibert_embedding_test.npz
+LongSciBERT_embeddings/longscibert_embedding.npz
