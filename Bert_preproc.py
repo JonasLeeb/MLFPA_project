@@ -7,7 +7,7 @@ from datasets import load_dataset
 # Load the dataset
 ds = load_dataset("ccdv/arxiv-classification", "no_ref")
 
-ds = ds['train'][:]['text'].replace('\n', ' ').strip()
+documents = [i.replace('\n', ' ').strip() for i in ds['train'][:]['text']]
 
 # Check if GPU is available
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -19,9 +19,6 @@ batch_size = 16
 # Initialize tokenizer and model
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 model = BertModel.from_pretrained('bert-base-uncased').to(device)
-
-# Prepare the dataset
-documents = ds["train"][:]['text']
 
 # Initialize a list to store embeddings
 cls_embeddings = []
