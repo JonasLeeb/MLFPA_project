@@ -1,5 +1,10 @@
 import torch
 import numpy as np
+from sklearn.decomposition import PCA
+import plotly.graph_objects as go
+import nltk
+nltk.download('all')
+from nltk.tokenize import sent_tokenize
 
 def embed_chunk(batch, tokenizer, model, device, max_length=512, max_chunks=None):
     embeddings = []
@@ -62,3 +67,56 @@ def describe_structure(obj, depth=0, max_items=3):
             print(f"{indent}  [...{len(obj) - max_items} more items]")
     else:
         print(f"{prefix}{type(obj).__name__}: {repr(obj)}")
+
+def PCA_encodings(embedding, title, ds):
+    # Assuming `data` is your 300-dimensional dataset (shape: [n_samples, 300])
+    pca = PCA(n_components=3)
+    reduced_data = pca.fit_transform(embedding[:10000])
+
+
+    colors = np.array(ds["train"][:]['label'])[:10000]
+    # Create a 3D scatter plot
+    fig = go.Figure(data=[go.Scatter3d(
+        x=reduced_data[:, 0],
+        y=reduced_data[:, 1],
+        z=reduced_data[:, 2],
+        mode='markers+text',
+        marker=dict(
+            size=3.5,
+            color=colors,
+            colorscale='turbo',
+            opacity=0.5
+        ),
+        # text=titles[:200],
+    )])
+    fig.update_layout(
+        title=title,
+    )
+
+    fig.update_layout(
+        # title=f"3D Scatter Plot of Word Vectors for '{center_word}'",
+        scene=dict(
+            xaxis_title='PCA 1',
+            yaxis_title='PCA 2',
+            zaxis_title='PCA 3'
+        ),
+        coloraxis_colorbar=dict(
+            title="Similarity",
+            thickness=20,
+            len=0.75,
+            x=1.1  # Position the colorbar slightly outside the plot
+        ),
+        width=1000,
+        height=800,
+    )
+    fig.show(renderer="browser")
+
+
+def encode_long_document(text, model, chunk_size=5):
+    device = model.device
+    sentences = sent_tokenize(text)
+    chunks = [' '.join(sentences[i:i+chunk_size]) for i in range(0, min(len(sentences),50), chunk_size)]
+    # If using SentenceTransformers:
+    chunk_embeddings = model.encode(chunks, device=device)
+    doc_embedding = np.mean(chunk_embeddings, axis=0)
+    return doc_embedding

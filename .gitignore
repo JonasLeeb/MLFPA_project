@@ -45,3 +45,4 @@ Sci2Vec_embeddings/sci2vec_embedding.npz
 wandb/
 LongSciBERT_embeddings/longscibert_embedding_test.npz
 LongSciBERT_embeddings/longscibert_embedding.npz
+BERT embeddings/sbert_embedding.npz
